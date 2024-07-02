@@ -395,3 +395,12 @@ category_ids:
   - code: SRV14-1004
     description: Assaying Services
     reference: <PR/Issue/Discussion Links md format text>
+  - code: SRV15-1001
+    description: Print Subscription
+    reference: <PR/Issue/Discussion Links md format text>
+  - code: SRV15-1002
+    description: Video Subscription
+    reference: <PR/Issue/Discussion Links md format text>
+  - code: SRV15-1003
+    description: Audio Subscription
+    reference: <PR/Issue/Discussion Links md format text>

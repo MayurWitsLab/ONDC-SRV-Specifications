@@ -1,0 +1,113 @@
+summary: ''
+description: ''
+value:
+  context:
+    domain: ONDC:SRV14
+    location:
+      city:
+        code: std:080
+      country:
+        code: IND
+    action: on_select
+    version: 2.0.0
+    bap_id: buyerapp.com
+    bap_uri: https://buyerapp.com/services
+    bpp_id: sellerapp.com
+    bpp_uri: https://sellerapp.com/services
+    transaction_id: T1
+    message_id: M2
+    timestamp: '2024-04-01T22:00:31.000Z'
+    ttl: PT30S
+  message:
+    order:
+      provider:
+        id: P1
+      items:
+        - fulfillment_ids:
+            - F1
+          id: I2
+          location_ids:
+            - L1
+      fulfillments:
+        - id: FI1
+          type: ONLINE
+          stops:
+            - type: start
+              time:
+                label: confirmed
+                range:
+                  start: '2024-04-04T00:00:00.000Z'
+              days: 01,05
+              schedule:
+                frequency: PT7D
+              times:
+                - '2024-04-04T22:00:00.000Z'
+                - '2024-04-06T22:00:00.000Z'
+      quote:
+        price:
+          currency: INR
+          value: '3394'
+        breakup:
+          - title: Basic Membership
+            price:
+              currency: INR
+              value: '2994'
+            item:
+              id: I1
+              quantity:
+                selected:
+                  count: 6
+              price:
+                currency: INR
+                value: '499'
+            tags:
+              - descriptor:
+                  code: title
+                list:
+                  - descriptor:
+                      code: type
+                    value: item
+          - title: tax
+            price:
+              currency: INR
+              value: '100'
+            item:
+              id: I2
+            tags:
+              - descriptor:
+                  code: title
+                list:
+                  - descriptor:
+                      code: type
+                    value: tax
+          - title: offer
+            price:
+              currency: INR
+              value: '-500.00'
+            item:
+              id: I1
+            tags:
+              - descriptor:
+                  code: TITLE
+                list:
+                  - descriptor:
+                      code: TYPE
+                    value: offer
+              - code: BENEFIT
+                list:
+                  - code: VALUE_TYPE
+                    value: percent
+                  - code: VALUE
+                    value: '60'
+                  - code: VALUE_CAP
+                    value: '-1000.00'
+              - code: META
+                list:
+                  - code: ADDITIVE
+                    value: 'no'
+                  - code: AUTO
+                    value: 'yes'
+        ttl: P1D
+      payments:
+        - type: PRE-FULFILLMENT
+          collected_by: BAP
