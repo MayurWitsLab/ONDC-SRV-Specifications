@@ -27,8 +27,8 @@
       },
       "items": [
         {
-          "fulfillment_ids": ["F3"],
-          "id": "I2"
+          "id": "I2",
+          "fulfillment_ids": ["F3"]
         }
       ],
       "fulfillments": [
@@ -50,20 +50,35 @@
                 "frequency": "P1M"
               }
             }
+          ],
+          "tags": [
+            {
+              "descriptor": {
+                "code": "INFO"
+              },
+              "list": [
+                {
+                  "descriptor": {
+                    "code": "PARENT_ID"
+                  },
+                  "value": "F1"
+                }
+              ]
+            }
           ]
         }
       ],
       "quote": {
         "price": {
           "currency": "INR",
-          "value": "599"
+          "value": "3094"
         },
         "breakup": [
           {
             "title": "Basic Membership",
             "price": {
               "currency": "INR",
-              "value": "499"
+              "value": "2994"
             },
             "item": {
               "id": "I1",
@@ -75,7 +90,8 @@
               "price": {
                 "currency": "INR",
                 "value": "499"
-              }
+              },
+              "fulfillment_ids": ["FII"]
             },
             "tags": [
               {

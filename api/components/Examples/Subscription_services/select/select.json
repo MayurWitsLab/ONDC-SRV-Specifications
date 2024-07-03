@@ -50,12 +50,22 @@
                 "duration": "P6M"
               }
             }
+          ],
+          "tags": [
+            {
+              "descriptor": {
+                "code": "INFO"
+              },
+              "list": [
+                {
+                  "descriptor": {
+                    "code": "PARENT_ID"
+                  },
+                  "value": "F1"
+                }
+              ]
+            }
           ]
-        }
-      ],
-      "payments": [
-        {
-          "type": "PRE-FULFILLMENT"
         }
       ]
     }

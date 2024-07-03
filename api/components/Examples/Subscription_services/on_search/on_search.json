@@ -22,20 +22,6 @@
   },
   "message": {
     "catalog": {
-      "fulfillments": [
-        {
-          "id": "F1",
-          "type": "ONLINE-FULFILLED"
-        },
-        {
-          "id": "F2",
-          "type": "OFFLINE-FULFILLED"
-        },
-        {
-          "id": "F3",
-          "type": "SUBSCRIPTION"
-        }
-      ],
       "payments": [
         {
           "id": "1",
@@ -48,10 +34,6 @@
         {
           "id": "3",
           "type": "POST-FULFILLMENT"
-        },
-        {
-          "id": "4",
-          "type": "SUBSCRIPTION"
         }
       ],
       "descriptor": {
@@ -122,6 +104,69 @@
               }
             }
           ],
+
+          "fulfillments": [
+            {
+              "id": "F1",
+              "type": "ONLINE"
+            },
+            {
+              "id": "F2",
+              "type": "OFFLINE"
+            },
+            {
+              "id": "F3",
+              "type": "SUBSCRIPTION",
+              "stops": {
+                "time": {
+                  "schedule": {
+                    "frequency": "P1M"
+                  }
+                }
+              },
+              "tags": [
+                {
+                  "descriptor": {
+                    "code": "INFO"
+                  },
+                  "list": [
+                    {
+                      "descriptor": {
+                        "code": "PARENT_ID"
+                      },
+                      "value": "F1,F2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "F4",
+              "type": "SUBSCRIPTION",
+              "stops": {
+                "time": {
+                  "schedule": {
+                    "frequency": "P7D"
+                  }
+                }
+              },
+              "tags": [
+                {
+                  "descriptor": {
+                    "code": "INFO"
+                  },
+                  "list": [
+                    {
+                      "descriptor": {
+                        "code": "PARENT_ID"
+                      },
+                      "value": "F1,F2"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
           "items": [
             {
               "id": "I1",
@@ -144,6 +189,14 @@
                     "url": "preview_video_image"
                   }
                 ]
+              },
+              "quantity": {
+                "maximum": {
+                  "count": 1
+                },
+                "minimum": {
+                  "count": 1
+                }
               },
               "price": {
                 "currency": "INR",
@@ -731,14 +784,6 @@
                     ]
                   }
                 ]
-              }
-            }
-          ],
-          "fulfillments": [
-            {
-              "contact": {
-                "phone": "9886098860",
-                "email": "abc@xyz.com"
               }
             }
           ]
