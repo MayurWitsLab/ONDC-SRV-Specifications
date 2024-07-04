@@ -1,6 +1,6 @@
 {
   "context": {
-    "domain": "ONDC:SRV15",
+    "domain": "ONDC:SRV13",
     "location": {
       "city": {
         "code": "std:080"
@@ -9,21 +9,28 @@
         "code": "IND"
       }
     },
-    "action": "on_init",
+    "action": "on_status",
     "version": "2.0.0",
     "bap_id": "buyerapp.com",
     "bap_uri": "https://buyerapp.com/services",
     "bpp_id": "sellerapp.com",
     "bpp_uri": "https://sellerapp.com/services",
     "transaction_id": "T1",
-    "message_id": "M3",
-    "timestamp": "2024-04-01T22:00:36.000Z",
+    "message_id": "M6",
+    "timestamp": "2024-04-02T12:00:40.000Z",
     "ttl": "PT30S"
   },
   "message": {
     "order": {
+      "id": "O1",
+      "status": "In-progress",
       "provider": {
-        "id": "P1"
+        "id": "P1",
+        "locations": [
+          {
+            "id": "L1"
+          }
+        ]
       },
       "items": [
         {
@@ -53,6 +60,11 @@
         {
           "id": "FI1",
           "type": "SUBSCRIPTION",
+          "state": {
+            "descriptor": {
+              "code": "PENDING"
+            }
+          },
           "stops": [
             {
               "type": "start",
@@ -157,15 +169,59 @@
       },
       "payments": [
         {
-          "id": "PG1",
+          "id": "P1",
           "collected_by": "BPP",
           "url": "https://e-mandate-payment-gateway-url",
           "params": {
             "amount": "599",
             "currency": "INR"
           },
+          "status": "PAID",
           "type": "PRE-FULFILLMENT",
           "tags": [
+            {
+              "descriptor": {
+                "code": "SETTLEMENT_DETAILS"
+              },
+              "list": [
+                {
+                  "descriptor": {
+                    "code": "COUNTERPARTY"
+                  },
+                  "value": "BAP"
+                },
+                {
+                  "descriptor": {
+                    "code": "MODE"
+                  },
+                  "value": "UPI"
+                },
+                {
+                  "descriptor": {
+                    "code": "BENEFICIARY_NAME"
+                  },
+                  "value": "xxxxx"
+                },
+                {
+                  "descriptor": {
+                    "code": "BANK_ACCOUNT_NO"
+                  },
+                  "value": "xxxxx"
+                },
+                {
+                  "descriptor": {
+                    "code": "IFSC_CODE"
+                  },
+                  "value": "xxxxxxx"
+                },
+                {
+                  "descriptor": {
+                    "code": "UPI_ADDRESS"
+                  },
+                  "value": "xxxxxxx"
+                }
+              ]
+            },
             {
               "descriptor": {
                 "code": "BUYER_FINDER_FEES"
@@ -188,7 +244,26 @@
             }
           ]
         }
-      ]
+      ],
+      "cancellation_terms": [
+        {
+          "fulfillment_state": {
+            "descriptor": {
+              "code": "PENDING",
+              "short_desc": "002"
+            }
+          },
+          "cancellation_fee": {
+            "percentage": "0.00",
+            "amount": {
+              "currency": "INR",
+              "value": "0.00"
+            }
+          }
+        }
+      ],
+      "created_at": "2024-04-01T22:00:38.000Z",
+      "updated_at": "2024-04-02T12:00:40.000Z"
     }
   }
 }

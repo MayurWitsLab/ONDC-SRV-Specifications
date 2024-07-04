@@ -1,6 +1,6 @@
 {
   "context": {
-    "domain": "ONDC:SRV13",
+    "domain": "ONDC:SRV17",
     "location": {
       "city": {
         "code": "std:080"
@@ -25,18 +25,12 @@
       "id": "O1",
       "status": "Created",
       "provider": {
-        "id": "P1",
-        "locations": [
-          {
-            "id": "L1"
-          }
-        ]
+        "id": "P1"
       },
       "items": [
         {
-          "id": "I2",
-
-          "fulfillment_ids": ["F1"],
+          "id": "I1",
+          "fulfillment_ids": ["F3"],
           "quantity": {
             "selected": {
               "count": 1
@@ -59,45 +53,37 @@
       },
       "fulfillments": [
         {
-          "id": "F1",
-          "type": "Home-Location",
-          "tracking": false,
+          "id": "FI1",
+          "type": "SUBSCRIPTION",
           "stops": [
             {
-              "type": "end",
-              "location": {
-                "gps": "12.974002,77.613458",
-                "address": "ABC House",
-                "city": {
-                  "name": "Bengaluru"
-                },
-                "country": {
-                  "code": "IND"
-                },
-                "area_code": "560001",
-                "state": {
-                  "name": "Karnataka"
-                }
-              },
-              "contact": {
-                "phone": "9886098860"
-              },
+              "type": "start",
               "time": {
                 "label": "confirmed",
                 "range": {
-                  "start": "2024-04-04T22:00:00.000Z",
-                  "end": "2024-04-04T23:00:00.000Z"
+                  "start": "2024-04-04T00:00:00.000Z",
+                  "end": "2024-10-04T00:00:00.000Z"
                 }
               },
-              "customer": {
-                "person": {
-                  "name": "Ramu"
-                }
-              },
-              "instructions": {
-                "name": "Special Instructions",
-                "short_desc": "Customer Special Instructions"
+              "duration": "P6M",
+              "schedule": {
+                "frequency": "P1M"
               }
+            }
+          ],
+          "tags": [
+            {
+              "descriptor": {
+                "code": "INFO"
+              },
+              "list": [
+                {
+                  "descriptor": {
+                    "code": "PARENT_ID"
+                  },
+                  "value": "F1"
+                }
+              ]
             }
           ]
         }
@@ -105,14 +91,14 @@
       "quote": {
         "price": {
           "currency": "INR",
-          "value": "1499"
+          "value": "3094"
         },
         "breakup": [
           {
-            "title": "LFT - Liver Function Profile, Serum",
+            "title": "Basic Membership",
             "price": {
               "currency": "INR",
-              "value": "1300"
+              "value": "2994"
             },
             "item": {
               "id": "I1",
@@ -123,8 +109,9 @@
               },
               "price": {
                 "currency": "INR",
-                "value": "1400"
-              }
+                "value": "499"
+              },
+              "fulfillment_ids": ["FII"]
             },
             "tags": [
               {
@@ -149,7 +136,7 @@
               "value": "100"
             },
             "item": {
-              "id": "I2"
+              "id": "I1"
             },
             "tags": [
               {
@@ -166,56 +153,6 @@
                 ]
               }
             ]
-          },
-          {
-            "title": "discount",
-            "price": {
-              "currency": "INR",
-              "value": "0"
-            },
-            "item": {
-              "id": "I2"
-            },
-            "tags": [
-              {
-                "descriptor": {
-                  "code": "title"
-                },
-                "list": [
-                  {
-                    "descriptor": {
-                      "code": "type"
-                    },
-                    "value": "discount"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "title": "pickup_charge",
-            "price": {
-              "currency": "INR",
-              "value": "99"
-            },
-            "item": {
-              "id": "I2"
-            },
-            "tags": [
-              {
-                "descriptor": {
-                  "code": "title"
-                },
-                "list": [
-                  {
-                    "descriptor": {
-                      "code": "type"
-                    },
-                    "value": "misc"
-                  }
-                ]
-              }
-            ]
           }
         ],
         "ttl": "P1D"
@@ -227,9 +164,7 @@
           "url": "https://e-mandate-payment-gateway-url",
           "params": {
             "amount": "599",
-            "currency": "INR",
-            "bank_account_number": "xxxxxxxx",
-            "virtual_payment_address": "xxx@xxxx"
+            "currency": "INR"
           },
           "status": "PAID",
           "type": "PRE-FULFILLMENT",
@@ -243,7 +178,7 @@
                   "descriptor": {
                     "code": "COUNTERPARTY"
                   },
-                  "value": "BPP"
+                  "value": "BAP"
                 },
                 {
                   "descriptor": {
