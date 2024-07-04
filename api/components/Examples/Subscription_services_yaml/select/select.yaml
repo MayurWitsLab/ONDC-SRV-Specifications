@@ -22,24 +22,26 @@ value:
     order:
       provider:
         id: P1
-        locations:
-          - id: L1
       items:
         - id: I1
-          location_ids:
-            - L1
           fulfillment_ids:
-            - F1
+            - F3
           quantity:
             selected:
-              count: 6
+              count: 1
       fulfillments:
-        - type: ONLINE
+        - type: SUBSCRIPTION
           stops:
             - type: start
               time:
                 label: selected
                 range:
                   start: '2024-04-04T00:00:00.000Z'
-      payments:
-        - type: PRE-FULFILLMENT
+                duration: P6M
+          tags:
+            - descriptor:
+                code: INFO
+              list:
+                - descriptor:
+                    code: PARENT_ID
+                  value: F1

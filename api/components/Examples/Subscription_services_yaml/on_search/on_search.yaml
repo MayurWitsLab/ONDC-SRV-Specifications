@@ -20,13 +20,6 @@ value:
     ttl: PT30S
   message:
     catalog:
-      fulfillments:
-        - id: F1
-          type: ONLINE-FULFILLED
-        - id: F2
-          type: OFFLINE-FULFILLED
-        - id: F3
-          type: SUBSCRIPTION
       payments:
         - id: '1'
           type: PRE-FULFILLMENT
@@ -34,8 +27,6 @@ value:
           type: ON-FULFILLMENT
         - id: '3'
           type: POST-FULFILLMENT
-        - id: '4'
-          type: SUBSCRIPTION
       descriptor:
         name: Video OTT Service Provider
         short_desc: Video OTT Service Provider
@@ -79,6 +70,37 @@ value:
               descriptor:
                 name: Rental Videos
                 code: RENTAL_VIDEO
+          fulfillments:
+            - id: F1
+              type: ONLINE
+            - id: F2
+              type: OFFLINE
+            - id: F3
+              type: SUBSCRIPTION
+              stops:
+                time:
+                  schedule:
+                    frequency: P1M
+              tags:
+                - descriptor:
+                    code: INFO
+                  list:
+                    - descriptor:
+                        code: PARENT_ID
+                      value: F1,F2
+            - id: F4
+              type: SUBSCRIPTION
+              stops:
+                time:
+                  schedule:
+                    frequency: P7D
+              tags:
+                - descriptor:
+                    code: INFO
+                  list:
+                    - descriptor:
+                        code: PARENT_ID
+                      value: F1,F2
           items:
             - id: I1
               descriptor:
@@ -92,6 +114,11 @@ value:
                     url: preview_video_url
                   - mimetype: video/mp4
                     url: preview_video_image
+              quantity:
+                maximum:
+                  count: 1
+                minimum:
+                  count: 1
               price:
                 currency: INR
                 value: '499.00'
@@ -298,6 +325,13 @@ value:
                       code: PENDING
                   cancellation_fee:
                     percentage: '0.00'
+              time:
+                label: validity
+                range:
+                  start: '2024-01-01T00:00:00.000Z'
+                  end: '2025-01-01T23:59:59.000Z'
+                schedule:
+                  frequency: P1M
               tags:
                 - descriptor:
                     code: ITEM_ATTRIBUTES
@@ -427,7 +461,3 @@ value:
                         value: 'no'
                       - code: AUTO
                         value: 'yes'
-          fulfillments:
-            - contact:
-                phone: '9886098860'
-                email: abc@xyz.com

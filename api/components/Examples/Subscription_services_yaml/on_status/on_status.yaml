@@ -2,28 +2,30 @@ summary: ''
 description: ''
 value:
   context:
-    domain: ONDC:SRV17
+    domain: ONDC:SRV13
     location:
       city:
         code: std:080
       country:
         code: IND
-    action: confirm
+    action: on_status
     version: 2.0.0
     bap_id: buyerapp.com
     bap_uri: https://buyerapp.com/services
     bpp_id: sellerapp.com
     bpp_uri: https://sellerapp.com/services
     transaction_id: T1
-    message_id: M4
-    timestamp: '2024-04-01T22:00:38.000Z'
+    message_id: M6
+    timestamp: '2024-04-02T12:00:40.000Z'
     ttl: PT30S
   message:
     order:
       id: O1
-      status: Created
+      status: In-progress
       provider:
         id: P1
+        locations:
+          - id: L1
       items:
         - id: I1
           fulfillment_ids:
@@ -46,6 +48,9 @@ value:
       fulfillments:
         - id: FI1
           type: SUBSCRIPTION
+          state:
+            descriptor:
+              code: PENDING
           stops:
             - type: start
               time:
@@ -144,5 +149,15 @@ value:
                 - descriptor:
                     code: BUYER_FINDER_FEE_AMOUNT
                   value: '0'
+      cancellation_terms:
+        - fulfillment_state:
+            descriptor:
+              code: PENDING
+              short_desc: '002'
+          cancellation_fee:
+            percentage: '0.00'
+            amount:
+              currency: INR
+              value: '0.00'
       created_at: '2024-04-01T22:00:38.000Z'
-      updated_at: '2024-04-01T22:00:38.000Z'
+      updated_at: '2024-04-02T12:00:40.000Z'
