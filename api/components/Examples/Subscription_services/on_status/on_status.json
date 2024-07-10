@@ -1,6 +1,6 @@
 {
   "context": {
-    "domain": "ONDC:SRV13",
+    "domain": "ONDC:SRV15",
     "location": {
       "city": {
         "code": "std:080"
@@ -25,12 +25,7 @@
       "id": "O1",
       "status": "In-progress",
       "provider": {
-        "id": "P1",
-        "locations": [
-          {
-            "id": "L1"
-          }
-        ]
+        "id": "P1"
       },
       "items": [
         {

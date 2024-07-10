@@ -1,7 +1,7 @@
 summary: Subscription Services
 description: The following is an illustrative flow to perform a transaction of a nature where a buyer would like to request for subscription services. The booking majorly happens in four phases of order processing flow, i.e. Discovery of available services and service providers based on serviceability, order, fulfillment and post-fulfillment.
 details:
-  - description: Sequence Diagram for Booking Agri Services - Seller Pickup
+  - description: Sequence Diagram for Purchasing Subscription Services
     mermaidGraph: >-
       sequenceDiagram
         participant B as Buyer
@@ -67,7 +67,7 @@ reference: if any
 steps:
   - summary: Search based on the intent for buying a particular subscription service
     api: search
-    description: Search intent sent by the buyer based on the particular subscription service required - e.g. CBC
+    description: Search intent sent by the buyer based on the particular subscription service required - e.g. OTT
     reference: if any
     example:
       $ref: "../../Examples/Subscription_services_yaml/search/search.yaml"
@@ -112,3 +112,27 @@ steps:
     reference: if any
     example:
       $ref: "../../Examples/Subscription_services_yaml/on_confirm/on_confirm.yaml"
+  - summary: Buyer requests status of the order
+    api: status
+    description: Buyer sends the /status call to know the status of the order
+    reference: if any
+    example:
+      $ref: "../../Examples/Subscription_services_yaml/status/status.yaml"
+  - summary: Seller responds with the status of the order
+    api: on_status
+    description: Seller sends the /on_status call for the order to know the status
+    reference: if any
+    example:
+      $ref: "../../Examples/Subscription_services_yaml/on_status/on_status.yaml"
+  - summary: Seller sends pg link for part payment
+    api: on_update (Payment mandate)
+    description: Seller app sends an on_update with mandate for continuing subscription
+    reference: if any
+    example:
+      $ref: "../../Examples/Subscription_services_yaml/on_update/on_update.yaml"
+  - summary: Seller confirms that the payment has been received
+    api: on_update (Payment confirmation)
+    description: Seller app sends an on_update with confirmation of receiving payment
+    reference: if any
+    example:
+      $ref: "../../Examples/Subscription_services_yaml/on_update/on_update_paid.yaml"

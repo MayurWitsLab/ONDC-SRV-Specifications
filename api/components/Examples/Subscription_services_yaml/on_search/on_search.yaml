@@ -140,7 +140,7 @@ value:
                     percentage: '0.00'
               tags:
                 - descriptor:
-                    code: ITEM_ATTRIBUTES
+                    code: ATTRIBUTES
                   list:
                     - descriptor:
                         code: QUALITY
@@ -202,7 +202,7 @@ value:
                     percentage: '0.00'
               tags:
                 - descriptor:
-                    code: ITEM_ATTRIBUTES
+                    code: ATTRIBUTES
                   list:
                     - descriptor:
                         code: QUALITY
@@ -264,7 +264,7 @@ value:
                     percentage: '0.00'
               tags:
                 - descriptor:
-                    code: ITEM_ATTRIBUTES
+                    code: ATTRIBUTES
                   list:
                     - descriptor:
                         code: QUALITY
@@ -334,7 +334,7 @@ value:
                   frequency: P1M
               tags:
                 - descriptor:
-                    code: ITEM_ATTRIBUTES
+                    code: ATTRIBUTES
                   list:
                     - descriptor:
                         code: QUALITY
@@ -396,7 +396,7 @@ value:
                     percentage: '0.00'
               tags:
                 - descriptor:
-                    code: ITEM_ATTRIBUTES
+                    code: ATTRIBUTES
                   list:
                     - descriptor:
                         code: QUALITY

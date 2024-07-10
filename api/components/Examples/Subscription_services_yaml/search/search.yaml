@@ -21,6 +21,8 @@ value:
       item:
         descriptor:
           name: OTT
+      category:
+        id: SRV-1002
       tags:
         - descriptor:
             code: BUYER_FINDER_FEES

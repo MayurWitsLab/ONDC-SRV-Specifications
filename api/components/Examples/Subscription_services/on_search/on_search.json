@@ -222,7 +222,7 @@
               "tags": [
                 {
                   "descriptor": {
-                    "code": "ITEM_ATTRIBUTES"
+                    "code": "ATTRIBUTES"
                   },
                   "list": [
                     {
@@ -331,7 +331,7 @@
               "tags": [
                 {
                   "descriptor": {
-                    "code": "ITEM_ATTRIBUTES"
+                    "code": "ATTRIBUTES"
                   },
                   "list": [
                     {
@@ -440,7 +440,7 @@
               "tags": [
                 {
                   "descriptor": {
-                    "code": "ITEM_ATTRIBUTES"
+                    "code": "ATTRIBUTES"
                   },
                   "list": [
                     {
@@ -560,7 +560,7 @@
               "tags": [
                 {
                   "descriptor": {
-                    "code": "ITEM_ATTRIBUTES"
+                    "code": "ATTRIBUTES"
                   },
                   "list": [
                     {
@@ -665,7 +665,7 @@
               "tags": [
                 {
                   "descriptor": {
-                    "code": "ITEM_ATTRIBUTES"
+                    "code": "ATTRIBUTES"
                   },
                   "list": [
                     {

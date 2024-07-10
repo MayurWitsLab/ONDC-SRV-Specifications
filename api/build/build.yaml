@@ -2593,6 +2593,9 @@ x-enum:
         - code: ONDC:SRV14
           description: Agriculture Services
           reference: <PR/Issue/Discussion Links md format text>
+        - code: ONDC:SRV15
+          description: Subscription Services
+          reference: <PR/Issue/Discussion Links md format text>
     message:
       intent:
         item:
@@ -3398,7 +3401,7 @@ x-flows:
       available services and service providers based on serviceability, order,
       fulfillment and post-fulfillment.
     details:
-      - description: Sequence Diagram for Booking Agri Services - Seller Pickup
+      - description: Sequence Diagram for Purchasing Subscription Services
         mermaidGraph: |-
           sequenceDiagram
             participant B as Buyer
@@ -3467,7 +3470,7 @@ x-flows:
         api: search
         description: >-
           Search intent sent by the buyer based on the particular subscription
-          service required - e.g. CBC
+          service required - e.g. OTT
         reference: if any
         example:
           summary: ''
@@ -3493,6 +3496,8 @@ x-flows:
                 item:
                   descriptor:
                     name: OTT
+                category:
+                  id: SRV-1002
                 tags:
                   - descriptor:
                       code: BUYER_FINDER_FEES
@@ -3651,7 +3656,7 @@ x-flows:
                               percentage: '0.00'
                         tags:
                           - descriptor:
-                              code: ITEM_ATTRIBUTES
+                              code: ATTRIBUTES
                             list:
                               - descriptor:
                                   code: QUALITY
@@ -3713,7 +3718,7 @@ x-flows:
                               percentage: '0.00'
                         tags:
                           - descriptor:
-                              code: ITEM_ATTRIBUTES
+                              code: ATTRIBUTES
                             list:
                               - descriptor:
                                   code: QUALITY
@@ -3775,7 +3780,7 @@ x-flows:
                               percentage: '0.00'
                         tags:
                           - descriptor:
-                              code: ITEM_ATTRIBUTES
+                              code: ATTRIBUTES
                             list:
                               - descriptor:
                                   code: QUALITY
@@ -3845,7 +3850,7 @@ x-flows:
                             frequency: P1M
                         tags:
                           - descriptor:
-                              code: ITEM_ATTRIBUTES
+                              code: ATTRIBUTES
                             list:
                               - descriptor:
                                   code: QUALITY
@@ -3907,7 +3912,7 @@ x-flows:
                               percentage: '0.00'
                         tags:
                           - descriptor:
-                              code: ITEM_ATTRIBUTES
+                              code: ATTRIBUTES
                             list:
                               - descriptor:
                                   code: QUALITY
@@ -3983,7 +3988,7 @@ x-flows:
           description: ''
           value:
             context:
-              domain: ONDC:SRV14
+              domain: ONDC:SRV15
               location:
                 city:
                   code: std:080
@@ -4035,7 +4040,7 @@ x-flows:
           description: ''
           value:
             context:
-              domain: ONDC:SRV14
+              domain: ONDC:SRV15
               location:
                 city:
                   code: std:080
@@ -4121,7 +4126,7 @@ x-flows:
                   ttl: P1D
                 payments:
                   - type: PRE-FULFILLMENT
-                    collected_by: BAP
+                    collected_by: BPP
       - summary: Buyer initialises the order for service
         api: init
         description: Buyer initialises the order and provides billing details
@@ -4483,7 +4488,7 @@ x-flows:
           description: ''
           value:
             context:
-              domain: ONDC:SRV17
+              domain: ONDC:SRV15
               location:
                 city:
                   code: std:080
@@ -4659,6 +4664,2193 @@ x-flows:
                         value: '0.00'
                 created_at: '2024-04-01T22:00:38.000Z'
                 updated_at: '2024-04-01T22:00:39.000Z'
+      - summary: Buyer requests status of the order
+        api: status
+        description: Buyer sends the /status call to know the status of the order
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: status
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: T1
+              message_id: M5
+              timestamp: '2024-04-01T22:00:40.000Z'
+              ttl: PT30S
+            message:
+              order_id: O1
+      - summary: Seller responds with the status of the order
+        api: on_status
+        description: Seller sends the /on_status call for the order to know the status
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: on_status
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: T1
+              message_id: M6
+              timestamp: '2024-04-02T12:00:40.000Z'
+              ttl: PT30S
+            message:
+              order:
+                id: O1
+                status: In-progress
+                provider:
+                  id: P1
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                billing:
+                  name: ONDC buyer
+                  address: >-
+                    22, Mahatma Gandhi Rd, Craig Park Layout, Ashok Nagar,
+                    Bengaluru, Karnataka 560001
+                  state:
+                    name: Karnataka
+                  city:
+                    name: Bengaluru
+                  tax_id: XXXXXXXXXXXXXXX
+                  email: nobody@nomail.com
+                  phone: '9886098860'
+                fulfillments:
+                  - id: FI1
+                    type: SUBSCRIPTION
+                    state:
+                      descriptor:
+                        code: PENDING
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-10-04T00:00:00.000Z'
+                        duration: P6M
+                        schedule:
+                          frequency: P1M
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                quote:
+                  price:
+                    currency: INR
+                    value: '3094'
+                  breakup:
+                    - title: Basic Membership
+                      price:
+                        currency: INR
+                        value: '2994'
+                      item:
+                        id: I1
+                        quantity:
+                          selected:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '499'
+                        fulfillment_ids:
+                          - FII
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: item
+                    - title: tax
+                      price:
+                        currency: INR
+                        value: '100'
+                      item:
+                        id: I1
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: tax
+                  ttl: P1D
+                payments:
+                  - id: P1
+                    collected_by: BPP
+                    url: https://e-mandate-payment-gateway-url
+                    params:
+                      amount: '599'
+                      currency: INR
+                    status: PAID
+                    type: PRE-FULFILLMENT
+                    tags:
+                      - descriptor:
+                          code: SETTLEMENT_DETAILS
+                        list:
+                          - descriptor:
+                              code: COUNTERPARTY
+                            value: BAP
+                          - descriptor:
+                              code: MODE
+                            value: UPI
+                          - descriptor:
+                              code: BENEFICIARY_NAME
+                            value: xxxxx
+                          - descriptor:
+                              code: BANK_ACCOUNT_NO
+                            value: xxxxx
+                          - descriptor:
+                              code: IFSC_CODE
+                            value: xxxxxxx
+                          - descriptor:
+                              code: UPI_ADDRESS
+                            value: xxxxxxx
+                      - descriptor:
+                          code: BUYER_FINDER_FEES
+                        display: false
+                        list:
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_TYPE
+                            value: percent
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_AMOUNT
+                            value: '0'
+                cancellation_terms:
+                  - fulfillment_state:
+                      descriptor:
+                        code: PENDING
+                        short_desc: '002'
+                    cancellation_fee:
+                      percentage: '0.00'
+                      amount:
+                        currency: INR
+                        value: '0.00'
+                created_at: '2024-04-01T22:00:38.000Z'
+                updated_at: '2024-04-02T12:00:40.000Z'
+      - summary: Seller sends pg link for part payment
+        api: on_update (Payment mandate)
+        description: Seller app sends an on_update with mandate for continuing subscription
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: on_update
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: 65fe13c2-d306-4ef1-8c25-fa126c134b67
+              message_id: ea89883a-57ff-44de-87fa-66b07c8d25d9
+              timestamp: '2024-04-02T22:00:38.000Z'
+            message:
+              order:
+                id: O1
+                status: In-Progress
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                payments:
+                  - id: P1
+                    collected_by: BPP
+                    url: https://e-mandate-payment-gateway-url
+                    params:
+                      amount: '599'
+                      currency: INR
+                    status: PAID
+                    type: PRE-FULFILLMENT
+                    tags:
+                      - descriptor:
+                          code: SETTLEMENT_DETAILS
+                        list:
+                          - descriptor:
+                              code: COUNTERPARTY
+                            value: BAP
+                          - descriptor:
+                              code: MODE
+                            value: UPI
+                          - descriptor:
+                              code: BENEFICIARY_NAME
+                            value: xxxxx
+                          - descriptor:
+                              code: BANK_ACCOUNT_NO
+                            value: xxxxx
+                          - descriptor:
+                              code: IFSC_CODE
+                            value: xxxxxxx
+                          - descriptor:
+                              code: UPI_ADDRESS
+                            value: xxxxxxx
+                      - descriptor:
+                          code: BUYER_FINDER_FEES
+                        display: false
+                        list:
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_TYPE
+                            value: percent
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_AMOUNT
+                            value: '0'
+                  - id: P2
+                    collected_by: BPP
+                    url: https://e-mandate-payment-gateway-url/installment-2
+                    params:
+                      amount: '599'
+                      currency: INR
+                    status: NOT-PAID
+                    type: PRE-FULFILLMENT
+                fulfillments:
+                  - id: FI1
+                    type: SUBSCRIPTION
+                    state:
+                      descriptor:
+                        code: PENDING
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-10-04T00:00:00.000Z'
+                        duration: P6M
+                        schedule:
+                          frequency: P1M
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                quote:
+                  price:
+                    currency: INR
+                    value: '3094'
+                  breakup:
+                    - title: Basic Membership
+                      price:
+                        currency: INR
+                        value: '2994'
+                      item:
+                        id: I1
+                        quantity:
+                          selected:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '499'
+                        fulfillment_ids:
+                          - FII
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: item
+                    - title: tax
+                      price:
+                        currency: INR
+                        value: '100'
+                      item:
+                        id: I1
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: tax
+                  ttl: P1D
+      - summary: Seller confirms that the payment has been received
+        api: on_update (Payment confirmation)
+        description: Seller app sends an on_update with confirmation of receiving payment
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: on_update
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: 65fe13c2-d306-4ef1-8c25-fa126c134b67
+              message_id: ea89883a-57ff-44de-87fa-66b07c8d25d9
+              timestamp: '2024-04-02T22:00:38.000Z'
+            message:
+              order:
+                id: O1
+                status: In-Progress
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                payments:
+                  - id: P1
+                    collected_by: BPP
+                    url: https://e-mandate-payment-gateway-url
+                    params:
+                      amount: '599'
+                      currency: INR
+                    status: PAID
+                    type: PRE-FULFILLMENT
+                    tags:
+                      - descriptor:
+                          code: SETTLEMENT_DETAILS
+                        list:
+                          - descriptor:
+                              code: COUNTERPARTY
+                            value: BAP
+                          - descriptor:
+                              code: MODE
+                            value: UPI
+                          - descriptor:
+                              code: BENEFICIARY_NAME
+                            value: xxxxx
+                          - descriptor:
+                              code: BANK_ACCOUNT_NO
+                            value: xxxxx
+                          - descriptor:
+                              code: IFSC_CODE
+                            value: xxxxxxx
+                          - descriptor:
+                              code: UPI_ADDRESS
+                            value: xxxxxxx
+                      - descriptor:
+                          code: BUYER_FINDER_FEES
+                        display: false
+                        list:
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_TYPE
+                            value: percent
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_AMOUNT
+                            value: '0'
+                  - id: P2
+                    collected_by: BPP
+                    url: https://e-mandate-payment-gateway-url/installment-2
+                    params:
+                      amount: '599'
+                      currency: INR
+                    status: PAID
+                    type: PRE-FULFILLMENT
+                fulfillments:
+                  - id: FI1
+                    type: SUBSCRIPTION
+                    state:
+                      descriptor:
+                        code: PENDING
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-10-04T00:00:00.000Z'
+                        duration: P6M
+                        schedule:
+                          frequency: P1M
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                quote:
+                  price:
+                    currency: INR
+                    value: '3094'
+                  breakup:
+                    - title: Basic Membership
+                      price:
+                        currency: INR
+                        value: '2994'
+                      item:
+                        id: I1
+                        quantity:
+                          selected:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '499'
+                        fulfillment_ids:
+                          - FII
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: item
+                    - title: tax
+                      price:
+                        currency: INR
+                        value: '100'
+                      item:
+                        id: I1
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: tax
+                  ttl: P1D
+  - summary: Subscription Services - Weekly Magazine
+    description: >-
+      The following is an illustrative flow to perform a transaction of a nature
+      where a buyer would like to request for subscription services. The booking
+      majorly happens in four phases of order processing flow, i.e. Discovery of
+      available services and service providers based on serviceability, order,
+      fulfillment and post-fulfillment.
+    details:
+      - description: Sequence Diagram for Purchasing Subscription Services
+        mermaidGraph: |-
+          sequenceDiagram
+            participant B as Buyer
+            participant BA as BuyerApp
+            participant G as Gateway
+            participant SA1 as SellerApp1
+            participant SA2 as SellerApp2
+            Note Over B,SA2: **SEARCH FLOW**
+            B ->> BA: Search for the Subscription based services within the city
+            BA ->> G: **/search** - Search for the Health Service within the city
+            G ->> SA1: **/search** - Services request broadcasted based <br>on city and domain in context
+            G ->> SA2: **/search** - Services request broadcasted based <br>on city and domain in context
+            SA1 ->> BA: **/on_search** - Services catalog returned <br>with pricing, seller statutory details, pricing
+            SA2 ->> BA: **/on_search** - Services catalog returned <br>with pricing, seller statutory details, pricing
+            Note Over BA,SA1: Buyer now has the option to choose the <br>services from either Seller 1 or Seller 2 or both
+            BA ->> B: Shows all service <br>options from sellers
+      - description: Ordering
+        mermaidGraph: |-
+          sequenceDiagram
+            participant B as Buyer
+            participant BA as BuyerApp
+            participant SA as SellerApp
+            Note Over B,SA: **SELECT FLOW**
+            B ->> BA: Selects one of the <br>providers for service
+            BA ->> SA: **/select** - A service is selected with a <br>TTL for receiving response
+            SA ->> BA: **/on_select** - Responds to the selection with <br>breakup, quote including total duration charges
+            BA ->> B: Shows response with price details
+      - description: Initializing the order
+        mermaidGraph: |-
+          sequenceDiagram
+            participant B as Buyer
+            participant BA as BuyerApp
+            participant SA as SellerApp      
+            Note Over B,SA: **INITIALIZATION FLOW**
+            B ->> BA: Proceeds with the Order
+            BA ->> SA: **/init** - Initializes the order and <br>sends billing details
+            SA ->> BA: **/on_init** - Order initialization with <br>fulfillment & settlement information <br>including UPI or NEFT/IMPS/Bank Transfer
+            BA ->> B: Confirms initialization
+      - description: Order Confirmation
+        mermaidGraph: |-
+          sequenceDiagram
+            participant B as Buyer
+            participant BA as BuyerApp
+            participant SA as SellerApp
+            Note Over B,SA: **CONFIRMATION FLOW**
+            B ->> BA: Confirms the Order
+            BA ->> SA: **/confirm** - Creates order to create final digital contract
+            SA ->> BA: **/on_confirm** - Accepts the order 
+            BA ->> B: Confirms order
+      - description: Fulfillment
+        mermaidGraph: |-
+          sequenceDiagram
+            participant B as Buyer
+            participant BA as BuyerApp
+            participant SA as SellerApp      
+            Note Over B,SA: **ORDER STATUS FLOW**
+            B ->> BA: Checks the order status
+            BA ->> SA: **/status** - Enquire order status <br>or tracking information
+            SA ->> BA: **/on_status_in_transit** - Latest order and fulfillment status is sent
+            BA ->> B: Updates the latest order <br>and fulfillment information
+    reference: if any
+    steps:
+      - summary: >-
+          Search based on the intent for buying a particular subscription
+          service
+        api: search
+        description: >-
+          Search intent sent by the buyer based on the particular subscription
+          service required - e.g. Magazines
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: search
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/ondc
+              transaction_id: T1
+              message_id: M1
+              timestamp: '2024-04-01T22:00:00.000Z'
+              ttl: PT30S
+            message:
+              intent:
+                item:
+                  descriptor:
+                    name: Magazines
+                category:
+                  id: SRV-1001
+                tags:
+                  - descriptor:
+                      code: BUYER_FINDER_FEES
+                    display: false
+                    list:
+                      - descriptor:
+                          code: BUYER_FINDER_FEE_TYPE
+                        value: percent
+                      - descriptor:
+                          code: BUYER_FINDER_FEE_AMOUNT
+                        value: '0'
+      - summary: Returns the catalog specific to the search intent
+        api: on_search
+        description: Returns the catalog specific to the search intent
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: on_search
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/ondc
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/ondc
+              transaction_id: T1
+              message_id: M1
+              timestamp: '2024-04-01T22:00:30.000Z'
+              ttl: PT30S
+            message:
+              catalog:
+                payments:
+                  - id: '1'
+                    type: PRE-FULFILLMENT
+                  - id: '2'
+                    type: ON-FULFILLMENT
+                  - id: '3'
+                    type: POST-FULFILLMENT
+                descriptor:
+                  name: Magazine Service Provider
+                  short_desc: Magazine Service Provider
+                  long_desc: Magazine Service Provider
+                  images:
+                    - url: https://abc.com/images/1-shop-img
+                providers:
+                  - id: P1
+                    descriptor:
+                      name: Digital Magzine Provider
+                      code: N001
+                      short_desc: Digital Magzine Provider
+                      long_desc: Digital Magzine Provider
+                      images:
+                        - url: https://abc.com/images/1-shop-img
+                    rating: '4.4'
+                    ttl: PT1D
+                    locations:
+                      - id: L1
+                        gps: 12.967555,77.749666
+                        address: Jayanagar 4th Block
+                        city:
+                          code: std:080
+                          name: Bengaluru
+                        state:
+                          code: KA
+                        country:
+                          code: IND
+                        area_code: '560076'
+                    creds:
+                      - id: MGZ-12345678
+                        type: Certificate
+                        desc: Certified Magazine Provider
+                        url: https://abcd.cdn.com/images/bage-img
+                    categories:
+                      - id: C1
+                        descriptor:
+                          name: Available in Digital
+                          code: DIGITAL
+                      - id: C2
+                        descriptor:
+                          name: Available in Print
+                          code: PRINT
+                      - id: C4
+                        descriptor:
+                          name: Newspaper
+                          code: NEWSPAPER
+                      - id: C5
+                        descriptor:
+                          name: Magazine
+                          code: MAGAZINE
+                      - id: C6
+                        descriptor:
+                          name: Variant Group
+                        tags:
+                          - descriptor:
+                              code: TYPE
+                            list:
+                              - descriptor:
+                                  code: TYPE
+                                value: variant_group
+                          - descriptor:
+                              code: ATTR
+                            list:
+                              - descriptor:
+                                  code: LANGUAGE
+                                value: item.tags.attributes.language
+                              - descriptor:
+                                  code: SEQ
+                                value: '1'
+                          - descriptor:
+                              code: ATTR
+                            list:
+                              - descriptor:
+                                  code: EDITION
+                                value: item.tags.attributes.edition
+                              - descriptor:
+                                  code: SEQ
+                                value: '2'
+                    fulfillments:
+                      - id: F1
+                        type: ONLINE
+                      - id: F2
+                        type: OFFLINE
+                      - id: F3
+                        type: SUBSCRIPTION
+                        stops:
+                          time:
+                            schedule:
+                              frequency: P1W
+                            duration: P8W
+                        tags:
+                          - descriptor:
+                              code: INFO
+                            list:
+                              - descriptor:
+                                  code: PARENT_ID
+                                value: F1,F2
+                      - id: F4
+                        type: SUBSCRIPTION
+                        stops:
+                          time:
+                            schedule:
+                              frequency: P1M
+                        tags:
+                          - descriptor:
+                              code: INFO
+                            list:
+                              - descriptor:
+                                  code: PARENT_ID
+                                value: F1,F2
+                    items:
+                      - id: I1
+                        parent_item_id: C6
+                        descriptor:
+                          name: Weekly India Today Magazine
+                          short_desc: Features Fashion & Sports
+                          long_desc: Features Fashion & Sports
+                          images:
+                            - url: https://abc.com/images/207.png
+                          media:
+                            - mimetype: video/mp4
+                              url: preview_video_url
+                            - mimetype: video/mp4
+                              url: preview_video_image
+                            - mimetype: image/jpeg
+                              url: preview_image_1
+                        rating:
+                          value: '4'
+                        creator:
+                          descriptor:
+                            name: India Today
+                        quantity:
+                          maximum:
+                            count: 2
+                          minimum:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '199.00'
+                          offered_value: '199.00'
+                          maximum_value: '299.00'
+                        category_ids:
+                          - SRV15-1001
+                          - C1
+                          - C5
+                        fulfillment_ids:
+                          - F1
+                          - F3
+                        payment_ids:
+                          - '1'
+                        cancellation_terms:
+                          - fulfillment_state:
+                              descriptor:
+                                code: PENDING
+                            cancellation_fee:
+                              percentage: '0.00'
+                        tags:
+                          - descriptor:
+                              code: ATTRIBUTES
+                              short_desc: Description
+                              long_desc: Description
+                            list:
+                              - descriptor:
+                                  code: INFO
+                                  short_desc: Description
+                                  long_desc: Description
+                              - descriptor:
+                                  code: SUPPORTED_DEVICES
+                                  short_desc: Description
+                                  long_desc: Description
+                          - descriptor:
+                              code: INFO
+                            list:
+                              - descriptor:
+                                  code: PUBLICATION_DATE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: 27-01-2024
+                              - descriptor:
+                                  code: EDITION
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: Delhi
+                              - descriptor:
+                                  code: FILE_SIZE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: '87343'
+                              - descriptor:
+                                  code: FILE_SIZE_UNIT
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: KB
+                              - descriptor:
+                                  code: NUMBER_OF_ISSUES
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: '100'
+                              - descriptor:
+                                  code: NUMBER_OF_PAGES
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: '70'
+                              - descriptor:
+                                  code: COUNTRY_OF_ORIGIN
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: India
+                              - descriptor:
+                                  code: LANGUAGE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: Hindi
+                              - descriptor:
+                                  code: GENRE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: Health and Fitness,Lifestyle,Travel
+                              - descriptor:
+                                  code: DOWNLOADABLE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: 'Y'
+                          - descriptor:
+                              code: SUPPORTED_DEVICES
+                              list:
+                                - descriptor:
+                                    code: DOWNLOAD_DEVICES
+                                    short_desc: Description
+                                    long_desc: Description
+                                  value: '2'
+                                - descriptor:
+                                    code: MULTI_DEVICE_SUPPORT
+                                    short_desc: Description
+                                    long_desc: Description
+                                  value: '2'
+                                - descriptor:
+                                    code: CONCURRENT_SUPPORT
+                                    short_desc: Description
+                                    long_desc: Description
+                                  value: '2'
+                        matched: true
+                        recommended: true
+                      - id: I2
+                        parent_item_id: C6
+                        descriptor:
+                          name: Weekly India Today Magazine
+                          short_desc: Features Fashion & Sports
+                          long_desc: Features Fashion & Sports
+                          images:
+                            - url: https://abc.com/images/207.png
+                          media:
+                            - mimetype: video/mp4
+                              url: preview_video_url
+                            - mimetype: video/mp4
+                              url: preview_video_image
+                            - mimetype: image/jpeg
+                              url: preview_image_1
+                        rating:
+                          value: '4'
+                        creator:
+                          descriptor:
+                            name: India Today
+                        quantity:
+                          maximum:
+                            count: 2
+                          minimum:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '199.00'
+                          offered_value: '199.00'
+                          maximum_value: '299.00'
+                        category_ids:
+                          - SRV15-1001
+                          - C1
+                          - C5
+                        fulfillment_ids:
+                          - F1
+                          - F3
+                        payment_ids:
+                          - '1'
+                        cancellation_terms:
+                          - fulfillment_state:
+                              descriptor:
+                                code: PENDING
+                            cancellation_fee:
+                              percentage: '0.00'
+                        tags:
+                          - descriptor:
+                              code: ATTRIBUTES
+                            list:
+                              - descriptor:
+                                  code: INFO
+                                  short_desc: Description
+                                  long_desc: Description
+                              - descriptor:
+                                  code: SUPPORTED_DEVICES
+                                  short_desc: Description
+                                  long_desc: Description
+                          - descriptor:
+                              code: INFO
+                            list:
+                              - descriptor:
+                                  code: PUBLICATION_DATE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: 27-01-2024
+                              - descriptor:
+                                  code: EDITION
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: Bangalore
+                              - descriptor:
+                                  code: FILE_SIZE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: '87343'
+                              - descriptor:
+                                  code: FILE_SIZE_UNIT
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: KB
+                              - descriptor:
+                                  code: NUMBER_OF_ISSUES
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: '100'
+                              - descriptor:
+                                  code: NUMBER_OF_PAGES
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: '70'
+                              - descriptor:
+                                  code: COUNTRY_OF_ORIGIN
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: India
+                              - descriptor:
+                                  code: LANGUAGE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: English
+                              - descriptor:
+                                  code: GENRE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: Health and Fitness,Lifestyle,Travel
+                              - descriptor:
+                                  code: DOWNLOADABLE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: 'Y'
+                          - descriptor:
+                              code: SUPPORTED_DEVICES
+                              list:
+                                - descriptor:
+                                    code: DOWNLOAD_DEVICES
+                                    short_desc: Description
+                                    long_desc: Description
+                                  value: '2'
+                                - descriptor:
+                                    code: MULTI_DEVICE_SUPPORT
+                                    short_desc: Description
+                                    long_desc: Description
+                                  value: '2'
+                                - descriptor:
+                                    code: CONCURRENT_SUPPORT
+                                    short_desc: Description
+                                    long_desc: Description
+                                  value: '2'
+                        matched: true
+                        recommended: true
+                      - id: I3
+                        descriptor:
+                          name: Monthly India Today Magazine
+                          short_desc: Features Fashion & Sports
+                          long_desc: Features Fashion & Sports
+                          images:
+                            - url: https://abc.com/images/207.png
+                          media:
+                            - mimetype: video/mp4
+                              url: preview_video_url
+                            - mimetype: video/mp4
+                              url: preview_video_image
+                            - mimetype: image/jpeg
+                              url: preview_image_1
+                        rating:
+                          value: '4.5'
+                        creator:
+                          descriptor:
+                            name: India Today
+                        quantity:
+                          maximum:
+                            count: 2
+                          minimum:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '299.00'
+                          offered_value: '299.00'
+                          maximum_value: '399.00'
+                        category_ids:
+                          - SRV15-1001
+                          - C2
+                          - C5
+                        fulfillment_ids:
+                          - F2
+                          - F4
+                        payment_ids:
+                          - '1'
+                        cancellation_terms:
+                          - fulfillment_state:
+                              descriptor:
+                                code: PENDING
+                            cancellation_fee:
+                              percentage: '0.00'
+                        time:
+                          label: validity
+                          range:
+                            start: '2022-11-10T00:00:00.000Z'
+                            end: '2022-11-20T19:30:00.000Z'
+                          days: 4,5
+                          schedule:
+                            frequency: PT1H
+                            holidays:
+                              - '2023-11-13'
+                              - '2023-11-15'
+                            times:
+                              - '2023-11-16T09:30:00.000Z'
+                              - '2023-11-16T19:30:00.000Z'
+                              - '2023-11-14T19:30:00.000Z'
+                              - '2023-11-17T19:30:00.000Z'
+                              - '2023-11-17T09:30:00.000Z'
+                        tags:
+                          - descriptor:
+                              code: ATTRIBUTES
+                            list:
+                              - descriptor:
+                                  code: INFO
+                                  short_desc: Description
+                                  long_desc: Description
+                              - descriptor:
+                                  code: SUPPORTED_DEVICES
+                                  short_desc: Description
+                                  long_desc: Description
+                          - descriptor:
+                              code: INFO
+                            list:
+                              - descriptor:
+                                  code: PUBLICATION_DATE
+                                  short_desc: Date of Publication
+                                  long_desc: Date of Publication
+                                value: 27-01-2024
+                              - descriptor:
+                                  code: FILE_SIZE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: '87343'
+                              - descriptor:
+                                  code: FILE_SIZE_UNIT
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: KB
+                              - descriptor:
+                                  code: NUMBER_OF_ISSUES
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: '100'
+                              - descriptor:
+                                  code: NUMBER_OF_PAGES
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: '70'
+                              - descriptor:
+                                  code: COUNTRY_OF_ORIGIN
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: India
+                              - descriptor:
+                                  code: LANGUAGE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: Hindi
+                              - descriptor:
+                                  code: GENRE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: Health and Fitness,Lifestyle,Travel
+                              - descriptor:
+                                  code: DOWNLOADABLE
+                                  short_desc: Description
+                                  long_desc: Description
+                                value: 'Y'
+                          - descriptor:
+                              code: SUPPORTED_DEVICES
+                              list:
+                                - descriptor:
+                                    code: DOWNLOAD_DEVICES
+                                    short_desc: Description
+                                    long_desc: Description
+                                  value: '2'
+                                - descriptor:
+                                    code: MULTI_DEVICE_SUPPORT
+                                    short_desc: Description
+                                    long_desc: Description
+                                  value: '2'
+                                - descriptor:
+                                    code: CONCURRENT_SUPPORT
+                                    short_desc: Description
+                                    long_desc: Description
+                                  value: '2'
+                        matched: true
+                        recommended: true
+                    tags:
+                      - descriptor:
+                          code: serviceability
+                        list:
+                          - descriptor:
+                              code: location
+                            value: L1
+                          - descriptor:
+                              code: category
+                            value: SRV15-1001
+                          - descriptor:
+                              code: type
+                            value: '13'
+                          - descriptor:
+                              code: val
+                            value: >-
+                              {"type": "FeatureCollection", "features":
+                              [{"type": "Feature", "properties": {}, "geometry":
+                              {"coordinates": [[[77.175571, 28.675927],
+                              [77.128737, 28.600972], [77.446934, 28.545325],
+                              [77.175571, 28.675927]]], "type": "Polygon"}}]}
+                          - descriptor:
+                              code: unit
+                            value: geojson
+                      - descriptor:
+                          code: serviceability
+                        list:
+                          - descriptor:
+                              code: location
+                            value: L1
+                          - descriptor:
+                              code: category
+                            value: SRV15-1001
+                          - descriptor:
+                              code: type
+                            value: '10'
+                          - descriptor:
+                              code: val
+                            value: '5'
+                          - descriptor:
+                              code: unit
+                            value: km
+                      - descriptor:
+                          code: serviceability
+                        list:
+                          - descriptor:
+                              code: location
+                            value: L1
+                          - descriptor:
+                              code: category
+                            value: SRV15-1001
+                          - descriptor:
+                              code: type
+                            value: '11'
+                          - descriptor:
+                              code: val
+                            value: 560001,560002
+                          - descriptor:
+                              code: unit
+                            value: pincode
+                      - descriptor:
+                          code: serviceability
+                        list:
+                          - descriptor:
+                              code: location
+                            value: L1
+                          - descriptor:
+                              code: category
+                            value: SRV15-1001
+                          - descriptor:
+                              code: type
+                            value: '12'
+                          - descriptor:
+                              code: val
+                            value: IND
+                          - descriptor:
+                              code: unit
+                            value: country
+                    offers:
+                      - id: FREEBIE!
+                        descriptor:
+                          name: Free Newsletter
+                          code: FREENEWS50
+                          short_desc: Get a free newsletter
+                          long_desc: Get a free newsletter
+                          images:
+                            - url: https://abc.com/images/207.png
+                        item_ids:
+                          - I1
+                          - I2
+                          - I3
+                        time:
+                          label: validity
+                          range:
+                            start: '2024-04-01T00:00:00.000Z'
+                            end: '2024-04-10T00:00:00.000Z'
+                          tags:
+                            - code: QUALIFIER
+                              list:
+                                - code: ITEM_COUNT
+                                  value: '2'
+                            - code: BENEFIT
+                              list:
+                                - code: ITEM_COUNT
+                                  value: '1'
+                                - code: ITEM_ID
+                                  value: SKU ITEM ID
+                                - code: ITEM_VALUE
+                                  value: '200.00'
+                            - code: META
+                              list:
+                                - code: ADDITIVE
+                                  value: 'no'
+                                - code: AUTO
+                                  value: 'yes'
+      - summary: Buyer selects the required health care service
+        api: select
+        description: >-
+          Buyer selects the required health care service + suitable fulfillment
+          type
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: select
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/ondc
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/ondc
+              transaction_id: T1
+              message_id: M2
+              timestamp: '2024-04-01T22:00:30.000Z'
+              ttl: PT30S
+            message:
+              order:
+                provider:
+                  id: P1
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                fulfillments:
+                  - type: SUBSCRIPTION
+                    stops:
+                      - type: start
+                        time:
+                          label: selected
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                          duration: P8W
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+      - summary: Seller confirms the schedule and returns the quote for service
+        api: on_select
+        description: Seller confirms the schedule and returns the quote for service
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: on_select
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: T1
+              message_id: M2
+              timestamp: '2024-04-01T22:00:31.000Z'
+              ttl: PT30S
+            message:
+              order:
+                provider:
+                  id: P1
+                items:
+                  - id: I2
+                    fulfillment_ids:
+                      - F3
+                fulfillments:
+                  - id: FI1
+                    type: SUBSCRIPTION
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-06-04T00:00:00.000Z'
+                        duration: P8W
+                        schedule:
+                          frequency: P1W
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                quote:
+                  price:
+                    currency: INR
+                    value: '1592'
+                  breakup:
+                    - title: Weekly India Today Magazine
+                      price:
+                        currency: INR
+                        value: '199'
+                      item:
+                        id: I1
+                        quantity:
+                          selected:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '199'
+                        fulfillment_ids:
+                          - FII
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: item
+                  ttl: P1D
+                payments:
+                  - type: PRE-FULFILLMENT
+                    collected_by: BPP
+      - summary: Buyer initialises the order for service
+        api: init
+        description: Buyer initialises the order and provides billing details
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: init
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: T1
+              message_id: M3
+              timestamp: '2024-04-01T22:00:35.000Z'
+              ttl: P30S
+            message:
+              order:
+                provider:
+                  id: P1
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                billing:
+                  name: ONDC buyer
+                  address: >-
+                    22, Mahatma Gandhi Rd, Craig Park Layout, Ashok Nagar,
+                    Bengaluru, Karnataka 560001
+                  state:
+                    name: Karnataka
+                  city:
+                    name: Bengaluru
+                  tax_id: XXXXXXXXXXXXXXX
+                  email: nobody@nomail.com
+                  phone: '9886098860'
+                fulfillments:
+                  - id: FI1
+                    type: SUBSCRIPTION
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-06-04T00:00:00.000Z'
+                        duration: P8W
+                        schedule:
+                          frequency: P1W
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                payments:
+                  - type: PRE-FULFILLMENT
+                    collected_by: BPP
+      - summary: Seller provides the final quotation for the service
+        api: on_init
+        description: Seller provides the final quotation
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: on_init
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: T1
+              message_id: M3
+              timestamp: '2024-04-01T22:00:36.000Z'
+              ttl: PT30S
+            message:
+              order:
+                provider:
+                  id: P1
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                billing:
+                  name: ONDC buyer
+                  address: >-
+                    22, Mahatma Gandhi Rd, Craig Park Layout, Ashok Nagar,
+                    Bengaluru, Karnataka 560001
+                  state:
+                    name: Karnataka
+                  city:
+                    name: Bengaluru
+                  tax_id: XXXXXXXXXXXXXXX
+                  email: nobody@nomail.com
+                  phone: '9886098860'
+                fulfillments:
+                  - id: FI1
+                    type: SUBSCRIPTION
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-06-04T00:00:00.000Z'
+                        duration: P8W
+                        schedule:
+                          frequency: P1W
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                quote:
+                  price:
+                    currency: INR
+                    value: '1592'
+                  breakup:
+                    - title: Weekly India Today Magazine
+                      price:
+                        currency: INR
+                        value: '199'
+                      item:
+                        id: I1
+                        quantity:
+                          selected:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '199'
+                        fulfillment_ids:
+                          - FII
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: item
+                  ttl: P1D
+                payments:
+                  - id: PG
+                    collected_by: BPP
+                    params:
+                      amount: '1592'
+                      currency: INR
+                    type: PRE-FULFILLMENT
+                    tags:
+                      - descriptor:
+                          code: BUYER_FINDER_FEES
+                        display: false
+                        list:
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_TYPE
+                            value: percent
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_AMOUNT
+                            value: '0'
+                      - descriptor:
+                          code: INFO
+                        display: false
+                        list:
+                          - descriptor:
+                              code: TOTAL_PAYMENTS
+                            value: '8'
+      - summary: Buyer confirm the order for the service
+        api: confirm
+        description: Buyer makes the payment to confirm the order
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV17
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: confirm
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: T1
+              message_id: M4
+              timestamp: '2024-04-01T22:00:38.000Z'
+              ttl: PT30S
+            message:
+              order:
+                id: O1
+                status: Created
+                provider:
+                  id: P1
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                billing:
+                  name: ONDC buyer
+                  address: >-
+                    22, Mahatma Gandhi Rd, Craig Park Layout, Ashok Nagar,
+                    Bengaluru, Karnataka 560001
+                  state:
+                    name: Karnataka
+                  city:
+                    name: Bengaluru
+                  tax_id: XXXXXXXXXXXXXXX
+                  email: nobody@nomail.com
+                  phone: '9886098860'
+                fulfillments:
+                  - id: FI1
+                    type: SUBSCRIPTION
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-06-04T00:00:00.000Z'
+                        duration: P8W
+                        schedule:
+                          frequency: P1W
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                quote:
+                  price:
+                    currency: INR
+                    value: '1592'
+                  breakup:
+                    - title: Weekly India Today Magazine
+                      price:
+                        currency: INR
+                        value: '199'
+                      item:
+                        id: I1
+                        quantity:
+                          selected:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '199'
+                        fulfillment_ids:
+                          - FII
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: item
+                  ttl: P1D
+                payments:
+                  - id: PG
+                    collected_by: BPP
+                    params:
+                      amount: '0'
+                      currency: INR
+                    type: PRE-FULFILLMENT
+                    tags:
+                      - descriptor:
+                          code: BUYER_FINDER_FEES
+                        display: false
+                        list:
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_TYPE
+                            value: percent
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_AMOUNT
+                            value: '0'
+                      - descriptor:
+                          code: INFO
+                        display: false
+                        list:
+                          - descriptor:
+                              code: TOTAL_PAYMENTS
+                            value: '8'
+                created_at: '2024-04-01T22:00:38.000Z'
+                updated_at: '2024-04-01T22:00:38.000Z'
+      - summary: Seller accepts the order for service
+        api: on_confirm
+        description: Seller app sends an /on_confirm call for confirming subscription
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: on_confirm
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: T1
+              message_id: M4
+              timestamp: '2024-04-01T22:00:39.000Z'
+              ttl: PT30S
+            message:
+              order:
+                id: O1
+                status: Accepted
+                provider:
+                  id: P1
+                  rateable: true
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                    tags:
+                      - descriptor:
+                          code: RESCHEDULE_TERMS
+                        list:
+                          - descriptor:
+                              code: FULFILLMENT_STATE
+                            value: Pending
+                          - descriptor:
+                              code: RESCHEDULE_ELIGIBLE
+                            value: 'true'
+                          - descriptor:
+                              code: RESCHEDULE_FEE
+                            value: '0.00'
+                          - descriptor:
+                              code: RESCHEDULE_WITHIN
+                            value: PT1D
+                      - descriptor:
+                          code: TNC_LINK
+                          name: Terms & Conditions
+                          short_desc: Terms and Conditions
+                        value: https://abc.com/tnc.html
+                billing:
+                  name: ONDC buyer
+                  address: >-
+                    22, Mahatma Gandhi Rd, Craig Park Layout, Ashok Nagar,
+                    Bengaluru, Karnataka 560001
+                  state:
+                    name: Karnataka
+                  city:
+                    name: Bengaluru
+                  tax_id: XXXXXXXXXXXXXXX
+                  email: nobody@nomail.com
+                  phone: '9886098860'
+                fulfillments:
+                  - id: FI1
+                    type: SUBSCRIPTION
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-10-04T00:00:00.000Z'
+                        duration: P8W
+                        schedule:
+                          frequency: P1W
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                quote:
+                  price:
+                    currency: INR
+                    value: '1592'
+                  breakup:
+                    - title: Weekly India Today Magazine
+                      price:
+                        currency: INR
+                        value: '199'
+                      item:
+                        id: I1
+                        quantity:
+                          selected:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '199'
+                        fulfillment_ids:
+                          - FII
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: item
+                  ttl: P1D
+                payments:
+                  - id: PG
+                    collected_by: BPP
+                    url: https://e-mandate-payment-gateway-url/installment
+                    params:
+                      amount: '1592'
+                      currency: INR
+                    type: PRE-FULFILLMENT
+                    tags:
+                      - descriptor:
+                          code: SETTLEMENT_DETAILS
+                        list:
+                          - descriptor:
+                              code: COUNTERPARTY
+                            value: BAP
+                          - descriptor:
+                              code: MODE
+                            value: UPI
+                          - descriptor:
+                              code: BENEFICIARY_NAME
+                            value: xxxxx
+                          - descriptor:
+                              code: BANK_ACCOUNT_NO
+                            value: xxxxx
+                          - descriptor:
+                              code: IFSC_CODE
+                            value: xxxxxxx
+                          - descriptor:
+                              code: UPI_ADDRESS
+                            value: xxxxxxx
+                      - descriptor:
+                          code: BUYER_FINDER_FEES
+                        display: false
+                        list:
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_TYPE
+                            value: percent
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_AMOUNT
+                            value: '0'
+                cancellation_terms:
+                  - fulfillment_state:
+                      descriptor:
+                        code: PENDING
+                        short_desc: '002'
+                    cancellation_fee:
+                      percentage: '0.00'
+                      amount:
+                        currency: INR
+                        value: '0.00'
+                created_at: '2024-04-01T22:00:38.000Z'
+                updated_at: '2024-04-01T22:00:39.000Z'
+      - summary: Seller sends the /on_confirm call for item
+        api: on_confirm (Child order)
+        description: Seller sends the /on_confirm call for item
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: on_confirm
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: T1
+              message_id: M4
+              timestamp: '2024-04-01T22:00:39.000Z'
+              ttl: PT30S
+            message:
+              order:
+                id: C1
+                ref_order_ids:
+                  - O1
+                status: In-Progress
+                provider:
+                  id: P1
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                billing:
+                  name: ONDC buyer
+                  address: >-
+                    22, Mahatma Gandhi Rd, Craig Park Layout, Ashok Nagar,
+                    Bengaluru, Karnataka 560001
+                  state:
+                    name: Karnataka
+                  city:
+                    name: Bengaluru
+                  tax_id: XXXXXXXXXXXXXXX
+                  email: nobody@nomail.com
+                  phone: '9886098860'
+                fulfillments:
+                  - id: FI2
+                    type: ONLINE
+                    state:
+                      descriptor:
+                        code: PENDING
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-04-11T00:00:00.000Z'
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                quote:
+                  price:
+                    currency: INR
+                    value: '1592'
+                  breakup:
+                    - title: Weekly India Today Magazine
+                      price:
+                        currency: INR
+                        value: '199'
+                      item:
+                        id: I1
+                        quantity:
+                          selected:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '199'
+                        fulfillment_ids:
+                          - FII
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: item
+                  ttl: P1D
+                payments:
+                  - id: P2
+                    collected_by: BPP
+                    params:
+                      amount: '199'
+                      currency: INR
+                    status: PAID
+                    type: PRE-FULFILLMENT
+                    tags:
+                      - descriptor:
+                          code: SETTLEMENT_DETAILS
+                        list:
+                          - descriptor:
+                              code: COUNTERPARTY
+                            value: BAP
+                          - descriptor:
+                              code: MODE
+                            value: UPI
+                          - descriptor:
+                              code: BENEFICIARY_NAME
+                            value: xxxxx
+                          - descriptor:
+                              code: BANK_ACCOUNT_NO
+                            value: xxxxx
+                          - descriptor:
+                              code: IFSC_CODE
+                            value: xxxxxxx
+                          - descriptor:
+                              code: UPI_ADDRESS
+                            value: xxxxxxx
+                      - descriptor:
+                          code: BUYER_FINDER_FEES
+                        display: false
+                        list:
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_TYPE
+                            value: percent
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_AMOUNT
+                            value: '0'
+                cancellation_terms:
+                  - fulfillment_state:
+                      descriptor:
+                        code: PENDING
+                        short_desc: '002'
+                    cancellation_fee:
+                      percentage: '0.00'
+                      amount:
+                        currency: INR
+                        value: '0.00'
+                created_at: '2024-04-01T22:00:38.000Z'
+                updated_at: '2024-04-01T22:00:39.000Z'
+      - summary: Seller confirms that the payment has been received
+        api: on_update (Payment confirmation)
+        description: Seller app sends an on_update with confirmation of receiving payment
+        reference: if any
+        example:
+          summary: ''
+          description: ''
+          value:
+            context:
+              domain: ONDC:SRV15
+              location:
+                city:
+                  code: std:080
+                country:
+                  code: IND
+              action: on_update
+              version: 2.0.0
+              bap_id: buyerapp.com
+              bap_uri: https://buyerapp.com/services
+              bpp_id: sellerapp.com
+              bpp_uri: https://sellerapp.com/services
+              transaction_id: 65fe13c2-d306-4ef1-8c25-fa126c134b67
+              message_id: ea89883a-57ff-44de-87fa-66b07c8d25d9
+              timestamp: '2024-04-02T22:00:38.000Z'
+            message:
+              order:
+                id: C1
+                ref_order_ids: O1
+                status: Completed
+                items:
+                  - id: I1
+                    fulfillment_ids:
+                      - F3
+                    quantity:
+                      selected:
+                        count: 1
+                payments:
+                  - id: P2
+                    collected_by: BPP
+                    url: https://e-mandate-payment-gateway-url/installment-2
+                    params:
+                      amount: '199'
+                      currency: INR
+                    status: PAID
+                    type: PRE-FULFILLMENT
+                    tags:
+                      - descriptor:
+                          code: SETTLEMENT_DETAILS
+                        list:
+                          - descriptor:
+                              code: COUNTERPARTY
+                            value: BAP
+                          - descriptor:
+                              code: MODE
+                            value: UPI
+                          - descriptor:
+                              code: BENEFICIARY_NAME
+                            value: xxxxx
+                          - descriptor:
+                              code: BANK_ACCOUNT_NO
+                            value: xxxxx
+                          - descriptor:
+                              code: IFSC_CODE
+                            value: xxxxxxx
+                          - descriptor:
+                              code: UPI_ADDRESS
+                            value: xxxxxxx
+                      - descriptor:
+                          code: BUYER_FINDER_FEES
+                        display: false
+                        list:
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_TYPE
+                            value: percent
+                          - descriptor:
+                              code: BUYER_FINDER_FEE_AMOUNT
+                            value: '0'
+                documents:
+                  - url: https://cdn_url
+                    label: MAGAZINE_URL_1
+                  - url: https://cdn_url
+                    label: MAGAZINE_URL_2
+                  - url: https://cdn_url
+                    label: MAGAZINE_URL_3
+                fulfillments:
+                  - id: FI1
+                    type: SUBSCRIPTION
+                    state:
+                      descriptor:
+                        code: PENDING
+                    stops:
+                      - type: start
+                        time:
+                          label: confirmed
+                          range:
+                            start: '2024-04-04T00:00:00.000Z'
+                            end: '2024-10-04T00:00:00.000Z'
+                        duration: P6M
+                        schedule:
+                          frequency: P1M
+                    tags:
+                      - descriptor:
+                          code: INFO
+                        list:
+                          - descriptor:
+                              code: PARENT_ID
+                            value: F1
+                quote:
+                  price:
+                    currency: INR
+                    value: '3094'
+                  breakup:
+                    - title: Basic Membership
+                      price:
+                        currency: INR
+                        value: '2994'
+                      item:
+                        id: I1
+                        quantity:
+                          selected:
+                            count: 1
+                        price:
+                          currency: INR
+                          value: '499'
+                        fulfillment_ids:
+                          - FII
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: item
+                    - title: tax
+                      price:
+                        currency: INR
+                        value: '100'
+                      item:
+                        id: I1
+                      tags:
+                        - descriptor:
+                            code: title
+                          list:
+                            - descriptor:
+                                code: type
+                              value: tax
+                  ttl: P1D
 x-examples:
   Services - Subscription Service:
     summary: Subscription Services
@@ -4694,6 +6886,8 @@ x-examples:
                   item:
                     descriptor:
                       name: OTT
+                  category:
+                    id: SRV-1002
                   tags:
                     - descriptor:
                         code: BUYER_FINDER_FEES
@@ -4706,16 +6900,16 @@ x-examples:
                             code: BUYER_FINDER_FEE_AMOUNT
                           value: '0'
 x-attributes:
-  Agriculture Services:
+  Subscription Services:
     attribute_set:
       search:
         parent: true
         context:
           parent: true
           domain:
-            description: domain code, enums - ONDC:SRV14 (Agriculuture Services)
+            description: domain code, enums - ONDC:SRV15 (Subscription Services)
             required: mandatory
-            usage: ONDC:SRV14
+            usage: ONDC:SRV15
             reference: if any
           city:
             code:
@@ -4763,7 +6957,7 @@ x-attributes:
               category:
                 description: Category of the search
                 required: optional
-                usage: SRV14-1001
+                usage: SRV15-1001
                 reference: if any
             fulfillment:
               parent: true
@@ -4772,7 +6966,7 @@ x-attributes:
                   fulfillment type for the service, enum - "Buyer-Fulfilled,
                   Seller-Fulfilled"
                 required: required
-                usage: Buyer-Fulfilled
+                usage: Seller-Fulfilled
                 reference: if any
               stops:
                 location:
@@ -4830,7 +7024,7 @@ x-attributes:
                   fulfillment type of the service, enum - "Seller-Fulfilled,
                   Buyer-Fulfilled"
                 required: required
-                usage: Selled-Fulfilled
+                usage: Seller-Fulfilled
                 reference: if any
             payments:
               parent: true
@@ -4896,7 +7090,7 @@ x-attributes:
                     category id of the service provided by the service provider
                     which was sent in /search call
                   required: required
-                  usage: SRV10-1000
+                  usage: SRV15-1001
                   reference: if any
                 fulfillment_ids:
                   description: >-
@@ -5097,10 +7291,10 @@ x-attributes:
               breakup:
                 title:
                   description: >-
-                    title of the service charges enum - Soil Testing, tax,
+                    title of the service charges enum - Sofa Cleaning, tax,
                     discount, convenience_fee
                   required: required
-                  usage: Soil Testing
+                  usage: Sofa Cleaning
                   reference: if any
                 price:
                   description: price of the quote breakup type
@@ -5157,10 +7351,10 @@ x-attributes:
                   reference: if any
                 title:
                   description: >-
-                    title of the service charges enum - Soil Testing, tax,
+                    title of the service charges enum - Sofa Cleaning, tax,
                     discount, convenience_fee
                   required: required
-                  usage: Soil Testing
+                  usage: Sofa Cleaning
                   reference: if any
             payments:
               parent: true
@@ -5363,9 +7557,7 @@ x-attributes:
                   code:
                     description: >-
                       Denotes the state of the fulfillment; Enum; Values can be
-                      - "PENDING", "IN_TRANSIT", "AT_LOCATION",
-                      "COLLECTED_BY_AGENT", "RECIEIVED_AT_LAB",
-                      "TEST_COMPLETED", "REPORT_GENERATED", "REPORT_SHARED";
+                      - "Pending", "In-Transit", "At-Location", "Completed";
                     required: mandatory
                     usage: '-'
                     reference: if any

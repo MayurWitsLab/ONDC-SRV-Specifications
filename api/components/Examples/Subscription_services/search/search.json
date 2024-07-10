@@ -25,6 +25,9 @@
           "name": "OTT"
         }
       },
+      "category": {
+        "id": "SRV-1002"
+      },
       "tags": [
         {
           "descriptor": {
